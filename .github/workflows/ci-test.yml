@@ -1,0 +1,13 @@
+name: "Build and test"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test_docker:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Docker test
+      run: docker-compose -f docker-compose.yml -p ci up -d && exitcode=$(docker wait ci_test_1) && docker logs ci_test_1
